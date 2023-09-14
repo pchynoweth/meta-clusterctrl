@@ -12,11 +12,10 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=bb6e931b02e57931863cefb015ae046c"
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-${PV}:"
 
 # Use patched version until figure out how to handle QA error missing python (due to python3 installed and script uses /usr/bin/python)
-#SRCREV = "b1530274206291d993185951608e4f4ea3d11e49"
-#SRC_URI = "git://github.com/burtyb/clusterhat-image.git"
+#SRC_URI = "git://github.com/burtyb/clusterhat-image.git;protocol=https;branch=master"
 
-SRCREV = "b5256c11b2bf48b7077c0ef710a6f623efce4865"
-SRC_URI = "git://github.com/ihatetoregister/clusterhat-image.git"
+SRCREV = "${AUTOREV}"
+SRC_URI = "git://github.com/ihatetoregister/clusterhat-image.git;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 
