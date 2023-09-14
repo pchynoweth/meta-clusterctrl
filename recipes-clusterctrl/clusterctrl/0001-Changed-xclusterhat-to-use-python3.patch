@@ -1,0 +1,19 @@
+From 8a16124f5c17e9ae9441dd94cae04990a4f42364 Mon Sep 17 00:00:00 2001
+From: Kas User <kas@example.com>
+Date: Thu, 14 Sep 2023 17:29:35 +0000
+Subject: [PATCH] Changed xclusterhat to use python3
+
+---
+ files/usr/sbin/xclusterhat | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/files/usr/sbin/xclusterhat b/files/usr/sbin/xclusterhat
+index ffaadcc..6d05061 100755
+--- a/files/usr/sbin/xclusterhat
++++ b/files/usr/sbin/xclusterhat
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/python3
+ 
+ import sys, time, os, os.path
+ import gi
