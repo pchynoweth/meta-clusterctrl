@@ -11,14 +11,10 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=bb6e931b02e57931863cefb015ae046c"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-${PV}:"
 
-# Use patched version until figure out how to handle QA error missing python (due to python3 installed and script uses /usr/bin/python)
 SRCREV = "96ad98ec8f42e96557e3ea86ae5a57a0a4f6cbac"
 SRC_URI = "git://github.com/burtyb/clusterhat-image.git;protocol=https;branch=master \
            file://0001-Changed-xclusterhat-to-use-python3.patch \
            "
-
-#SRCREV = "${AUTOREV}"
-#SRC_URI = "git://github.com/ihatetoregister/clusterhat-image.git;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 
