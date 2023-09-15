@@ -14,6 +14,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-${PV}:"
 SRCREV = "96ad98ec8f42e96557e3ea86ae5a57a0a4f6cbac"
 SRC_URI = "git://github.com/burtyb/clusterhat-image.git;protocol=https;branch=master \
            file://0001-Changed-xclusterhat-to-use-python3.patch \
+           file://0001-Changed-import-of-glob-to-glob2.patch \
            "
 
 S = "${WORKDIR}/git"

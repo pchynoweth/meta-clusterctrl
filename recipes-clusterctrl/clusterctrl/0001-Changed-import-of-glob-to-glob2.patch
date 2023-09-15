@@ -1,0 +1,22 @@
+From 943ef360e3e9cbcb01ba607bdb471a094222ab40 Mon Sep 17 00:00:00 2001
+From: pchynoweth <24738364+pchynoweth@users.noreply.github.com>
+Date: Fri, 15 Sep 2023 19:36:24 +0100
+Subject: [PATCH] Changed import of glob to glob2
+
+---
+ files/usr/sbin/clusterctrl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/files/usr/sbin/clusterctrl b/files/usr/sbin/clusterctrl
+index 8a7c17e..d558d26 100755
+--- a/files/usr/sbin/clusterctrl
++++ b/files/usr/sbin/clusterctrl
+@@ -4,7 +4,7 @@
+ #
+ # (c) 8086 Consultancy 2018-2022
+ #
+-import glob, sys, smbus, time, os
++import glob2 as glob, sys, smbus, time, os
+ 
+ # Usage
+ # clusterctl <cmd> [<devices>]
