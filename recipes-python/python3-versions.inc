@@ -1,0 +1,1 @@
+PREFERRED_VERSION_python3-glob2 = "0.7"
