@@ -1,0 +1,1 @@
+CMDLINE:append = " init=/usr/sbin/reconfig-clusterctrl cnat"
