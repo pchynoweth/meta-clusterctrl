@@ -11,8 +11,6 @@ SRC_URI[sha256sum] = "5792a9defee40f15d330a40d9b1800545c32e47ba7fc66b6f28f133c9f
 
 S = "${WORKDIR}/libusb1-3.0.0"
 
-DEPENDS = "python3-pip"
-
 RDEPENDS_${PN} = ""
 
 inherit setuptools3

@@ -11,6 +11,8 @@ SRC_URI[sha256sum] = "a4cc7404a203144754164b8b40994e2849fde1cfff06b08492f12fff9d
 
 S = "${WORKDIR}/pyusb-1.2.1"
 
+DEPENDS = "python3-pip"
+
 RDEPENDS_${PN} = ""
 
 inherit setuptools3
