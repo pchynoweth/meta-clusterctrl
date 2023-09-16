@@ -40,7 +40,7 @@ do_install() {
     cp -r --no-dereference --preserve=mode,links -v ${S}/files/usr/share/* ${D}/${datadir}
 }
 
-RDEPENDS:${PN} = " bash python3-core python3-smbus rpi-gpio python3-glob2 python3-pyusb python3-libusb"
+RDEPENDS:${PN} = " bash python3-core python3-smbus rpi-gpio python3-glob2 python3-pyusb python3-libusb1"
 
 ENABLE_I2C = "1"
 KERNEL_MODULE_AUTOLOAD:rpi:append = " i2c-dev i2c-bcm2708"
