@@ -41,3 +41,13 @@ do_install() {
 }
 
 RDEPENDS:${PN} = " bash python3-core python3-smbus rpi-gpio python3-glob2 python3-pyusb python3-libusb"
+
+ENABLE_I2C = "1"
+KERNEL_MODULE_AUTOLOAD:rpi:append = " i2c-dev i2c-bcm2708"
+
+DISTRO_FEATURES:append = " usbhost virtualization wifi systemd"
+VIRTUAL-RUNTIME_init_manager = "systemd"
+
+PACKAGE_CLASSES = "package_deb"
+IMAGE_FEATURES:append = " package-management"
+IMAGE_INSTALL:append = " apt gnupg linux-firmware-rtl8192cu"
