@@ -19,7 +19,7 @@ SRC_URI = "git://github.com/burtyb/clusterhat-image.git;protocol=https;branch=ma
 
 S = "${WORKDIR}/git"
 
-FILES:${PN} = "/usr/**"
+FILES:${PN} = "/usr/** ${D}/${systemd_system_unitdir}/clusterctrl-init.service"
 
 do_compile() {
 }
@@ -34,20 +34,17 @@ do_install() {
     #install -d ${D}/${datadir}/clusterctrl/python/
     #install -m 0755 ${S}/files/usr/share/clusterctrl/python/* ${D}/${datadir}/clusterctrl/python/
 
+    install -d ${D}${systemd_system_unitdir}
     install -d ${D}/${sbindir}
     install -d ${D}/${datadir}
+
+	install -m 644 ${S}/files/usr/lib/systemd/system/clusterctrl-init.service ${D}/${systemd_system_unitdir}
     cp -r --no-dereference --preserve=mode,links -v ${S}/files/usr/sbin/* ${D}/${sbindir}
     cp -r --no-dereference --preserve=mode,links -v ${S}/files/usr/share/* ${D}/${datadir}
 }
 
 RDEPENDS:${PN} = " bash python3-core python3-smbus rpi-gpio python3-glob2 python3-pyusb python3-libusb1"
 
-ENABLE_I2C = "1"
-KERNEL_MODULE_AUTOLOAD:rpi:append = " i2c-dev i2c-bcm2708"
+inherit systemd
 
-DISTRO_FEATURES:append = " usbhost virtualization wifi systemd"
-VIRTUAL-RUNTIME_init_manager = "systemd"
-
-PACKAGE_CLASSES = "package_deb"
-IMAGE_FEATURES:append = " package-management"
-IMAGE_INSTALL:append = " apt gnupg linux-firmware-rtl8192cu"
+SYSTEMD_SERVICE:${PN}:append = "clusterctrl-init.service"
