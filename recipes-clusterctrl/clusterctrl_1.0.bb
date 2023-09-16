@@ -19,7 +19,7 @@ SRC_URI = "git://github.com/burtyb/clusterhat-image.git;protocol=https;branch=ma
 
 S = "${WORKDIR}/git"
 
-FILES:${PN} = "/usr/** ${D}/${systemd_system_unitdir}/clusterctrl-init.service"
+FILES:${PN} = "/usr/** ${systemd_system_unitdir}/clusterctrl-init.service"
 
 do_compile() {
 }
