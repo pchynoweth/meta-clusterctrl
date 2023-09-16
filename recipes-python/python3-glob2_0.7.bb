@@ -11,8 +11,6 @@ SRC_URI[sha256sum] = "85c3dbd07c8aa26d63d7aacee34fa86e9a91a3873bc30bf62ec46e531f
 
 S = "${WORKDIR}/glob2-0.7"
 
-DEPENDS:${PN} = "python3-pip"
-
 RDEPENDS:${PN} = ""
 
 inherit setuptools3
