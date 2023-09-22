@@ -46,6 +46,7 @@ do_install() {
     install -d ${D}/${datadir}
 
 	install -m 644 ${S}/files/usr/lib/systemd/system/clusterctrl-init.service ${D}/${systemd_system_unitdir}
+	install -m 644 ${S}/files/usr/lib/systemd/system/clusterctrl-composite.service ${D}/${systemd_system_unitdir}
     cp -r --no-dereference --preserve=mode,links -v ${S}/files/usr/sbin/* ${D}/${sbindir}
     cp -r --no-dereference --preserve=mode,links -v ${S}/files/usr/share/* ${D}/${datadir}
 
@@ -76,4 +77,4 @@ RDEPENDS:${PN} = " bash python3-core python3-smbus rpi-gpio python3-glob2 python
 
 inherit systemd
 
-SYSTEMD_SERVICE:${PN} = "clusterctrl-init.service"
+SYSTEMD_SERVICE:${PN} = "clusterctrl-init.service clusterctrl-composite.service"
