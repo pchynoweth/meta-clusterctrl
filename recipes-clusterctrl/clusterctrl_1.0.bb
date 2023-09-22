@@ -31,6 +31,9 @@ FILES:${PN} = " \
     /usr/** \
     ${systemd_system_unitdir}/clusterctrl-init.service \
     ${@get_files(d)} \
+    ${sysconfdir}/udev/rules.d/90-clusterctrl.rules \
+    ${sysconfdir}/minicom/minirc.* \
+    ${sysconfdir}/kernel/postinst.d/clusterctrl \
     "
 
 WIFI_CONFIG ?= "n"
@@ -42,13 +45,22 @@ do_compile() {
 
 do_install() {
     install -d ${D}${systemd_system_unitdir}
-    install -d ${D}/${sbindir}
-    install -d ${D}/${datadir}
+    install -d ${D}${sbindir}
+    install -d ${D}${datadir}
+    install -d ${D}${sysconfdir}/udev/rules.d
+    install -d ${D}${sysconfdir}/minicom
+    install -d ${D}${sysconfdir}/kernel/postinst.d
 
 	install -m 644 ${S}/files/usr/lib/systemd/system/clusterctrl-init.service ${D}/${systemd_system_unitdir}
 	install -m 644 ${S}/files/usr/lib/systemd/system/clusterctrl-composite.service ${D}/${systemd_system_unitdir}
     cp -r --no-dereference --preserve=mode,links -v ${S}/files/usr/sbin/* ${D}/${sbindir}
     cp -r --no-dereference --preserve=mode,links -v ${S}/files/usr/share/* ${D}/${datadir}
+
+    install -m 644 ${S}/files/etc/udev/rules.d/90-clusterctrl.rules ${D}${sysconfdir}/udev/rules.d
+
+    install -m 644 ${S}/files/etc/minicom/minirc.* ${D}${sysconfdir}/minicom
+
+    install -m 644 ${S}/files/etc/kernel/postinst.d/clusterctrl ${D}${sysconfdir}/kernel/postinst.d
 
     if [ "${@ 'on' if bb.utils.to_boolean(d.getVar('WIFI_CONFIG'), False) else ''}" = "on" ]; then
         install -d ${D}${sysconfdir}/wpa_supplicant
