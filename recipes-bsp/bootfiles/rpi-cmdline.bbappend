@@ -1,1 +1,1 @@
-CMDLINE:append = " init=/usr/sbin/reconfig-clusterctrl cnat"
+CMDLINE:append = " init=/usr/sbin/reconfig-clusterctrl ${CLUSTERCTRL_VARIANT}"

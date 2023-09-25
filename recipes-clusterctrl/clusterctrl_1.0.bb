@@ -13,7 +13,6 @@ SRCREV = "96ad98ec8f42e96557e3ea86ae5a57a0a4f6cbac"
 SRC_URI = "git://github.com/burtyb/clusterhat-image.git;protocol=https;branch=master \
            file://0001-Changed-xclusterhat-to-use-python3.patch \
            file://0001-Changed-import-of-glob-to-glob2.patch \
-           file://85-wireless.network \
            file://60-br0.netdev \
            file://60-brint.netdev \
            file://65-br0.network \
@@ -22,19 +21,9 @@ SRC_URI = "git://github.com/burtyb/clusterhat-image.git;protocol=https;branch=ma
 
 S = "${WORKDIR}/git"
 
-def get_files(d):
-    if bb.utils.to_boolean(d.getVar('WIFI_CONFIG'), False):
-        return " ".join([
-            "${sysconfdir}/systemd/system/multi-user.target.wants/wpa_supplicant@wlan0.service",
-            "${sysconfdir}/wpa_supplicant/wpa_supplicant-wlan0.conf",
-            "${systemd_unitdir}/network/85-wireless.network"
-        ])
-    return ""
-
 FILES:${PN} = " \
     /usr/** \
     ${systemd_system_unitdir}/clusterctrl-init.service \
-    ${@get_files(d)} \
     ${sysconfdir}/udev/rules.d/90-clusterctrl.rules \
     ${sysconfdir}/minicom/minirc.* \
     ${sysconfdir}/kernel/postinst.d/clusterctrl \
@@ -115,56 +104,38 @@ EOF
     install -m 644 ${WORKDIR}/60-br0.netdev ${WORKDIR}/65-br0.network ${D}${systemd_unitdir}/network
     install -m 644 ${WORKDIR}/60-brint.netdev ${WORKDIR}/65-brint.network ${D}${systemd_unitdir}/network
 
-    for i in {1..5}; do
-        cat > ${D}${systemd_unitdir}/network/65-ethpi$i << EOF
-[Match]
-Name=ethpi$i
-
-[Network]
-Bridge=br0
-EOF
-    done
-
-    for i in {1..5}; do
-        cat > ${D}${systemd_unitdir}/network/65-ethupi$i.10 << EOF
+    if [ ${CLUSTERCTRL_VARIANT} = "cbridge" ]; then
+        for i in 1 2 3 4 5; do
+            cat > ${D}${systemd_unitdir}/network/65-ethupi$i.10 << EOF
 [Match]
 Name=ethupi$i.10
 
 [Network]
 Bridge=brint
 EOF
-    done
+        done
+    fi
 
-    for i in {1..5}; do
-        cat > ${D}${systemd_unitdir}/network/65-ethupi$i << EOF
+    if [ ${CLUSTERCTRL_VARIANT} = "cbridge" ] || [ ${CLUSTERCTRL_VARIANT} = "cnat" ]; then
+        for i in 1 2 3 4 5; do
+            cat > ${D}${systemd_unitdir}/network/65-ethpi$i << EOF
+[Match]
+Name=ethpi$i
+
+[Network]
+Bridge=br0
+EOF
+        done
+
+        for i in 1 2 3 4 5; do
+            cat > ${D}${systemd_unitdir}/network/65-ethupi$i << EOF
 [Match]
 Name=ethupi$i
 
 [Network]
 Bridge=br0
 EOF
-    done
-
-    if [ "${@ 'on' if bb.utils.to_boolean(d.getVar('WIFI_CONFIG'), False) else ''}" = "on" ]; then
-        install -d ${D}${sysconfdir}/wpa_supplicant
-        install -d ${D}${sysconfdir}/systemd/system/multi-user.target.wants
-        install -d ${D}${systemd_unitdir}/network
-
-        cat > ${D}${sysconfdir}/wpa_supplicant/wpa_supplicant-wlan0.conf << EOF
-ctrl_interface=/var/run/wpa_supplicant
-ctrl_interface_group=0
-update_config=1
-
-network={
-        ssid="${WIFI_SSID}"
-        psk="${WIFI_PASSWORD}"
-        proto=RSN
-        key_mgmt=WPA-PSK
- }
-EOF
-
-        ln -sf ${systemd_system_unitdir}/wpa_supplicant@.service ${D}${sysconfdir}/systemd/system/multi-user.target.wants/wpa_supplicant@wlan0.service
-        install -m 644 ${WORKDIR}/85-wireless.network ${D}${systemd_unitdir}/network
+        done
     fi
 }
 
