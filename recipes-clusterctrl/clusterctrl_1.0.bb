@@ -106,7 +106,7 @@ EOF
 
     if [ ${CLUSTERCTRL_VARIANT} = "cbridge" ]; then
         for i in 1 2 3 4 5; do
-            cat > ${D}${systemd_unitdir}/network/65-ethupi$i.10 << EOF
+            cat > ${D}${systemd_unitdir}/network/65-ethupi$i.10.network << EOF
 [Match]
 Name=ethupi$i.10
 
@@ -118,7 +118,7 @@ EOF
 
     if [ ${CLUSTERCTRL_VARIANT} = "cbridge" ] || [ ${CLUSTERCTRL_VARIANT} = "cnat" ]; then
         for i in 1 2 3 4 5; do
-            cat > ${D}${systemd_unitdir}/network/65-ethpi$i << EOF
+            cat > ${D}${systemd_unitdir}/network/65-ethpi$i.network << EOF
 [Match]
 Name=ethpi$i
 
@@ -128,7 +128,7 @@ EOF
         done
 
         for i in 1 2 3 4 5; do
-            cat > ${D}${systemd_unitdir}/network/65-ethupi$i << EOF
+            cat > ${D}${systemd_unitdir}/network/65-ethupi$i.network << EOF
 [Match]
 Name=ethupi$i
 
