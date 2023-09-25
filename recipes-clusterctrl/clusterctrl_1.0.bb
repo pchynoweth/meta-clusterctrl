@@ -7,7 +7,7 @@ DESCRIPTION = "Control application for ClusterHAT"
 SECTION = "clusterctrl"
 DEPENDS = ""
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=bb6e931b02e57931863cefb015ae046c"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=7ae2be7fb1637141840314b51970a9f7"
 
 SRCREV = "96ad98ec8f42e96557e3ea86ae5a57a0a4f6cbac"
 SRC_URI = "git://github.com/burtyb/clusterhat-image.git;protocol=https;branch=master \
