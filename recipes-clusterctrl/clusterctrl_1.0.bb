@@ -32,13 +32,6 @@ FILES:${PN} = " \
     ${systemd_unitdir}/network/* \
     "
 
-WIFI_CONFIG ?= "n"
-WIFI_SSID ?= ""
-WIFI_PASSWORD ?= ""
-
-do_compile() {
-}
-
 do_install() {
     install -d ${D}${systemd_system_unitdir}
     install -d ${D}${sbindir}
