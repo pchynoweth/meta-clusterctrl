@@ -1,0 +1,20 @@
+From 3fe08766a4d44ecf75aa7229bd67b3263cce4a08 Mon Sep 17 00:00:00 2001
+From: Kas User <kas@example.com>
+Date: Mon, 2 Oct 2023 21:02:47 +0000
+Subject: [PATCH] Fixed udev rule for i2c_tiny_usb
+
+---
+ files/etc/udev/rules.d/90-clusterctrl.rules | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/files/etc/udev/rules.d/90-clusterctrl.rules b/files/etc/udev/rules.d/90-clusterctrl.rules
+index 9308c75..2be04cd 100644
+--- a/files/etc/udev/rules.d/90-clusterctrl.rules
++++ b/files/etc/udev/rules.d/90-clusterctrl.rules
+@@ -15,5 +15,5 @@ SUBSYSTEM=="tty", ATTRS{idVendor}=="3171", ATTRS{idProduct}=="0020", ENV{ID_USB_
+ 
+ # Rules to load the correct kernel module for Cluster CTRL devices
+ # and add a link to /dev/ClusterCTRL-X to /dev/i2c-X for simple enumeration
+-ACTION=="add", ATTRS{idVendor}=="3171", ATTRS{idProduct}=="001?", RUN+="/sbin/modprobe i2c_tiny_usb" RUN+="/bin/bash -c 'echo 0x3171 0x$ID_MODEL_ID >> /sys/bus/usb/drivers/i2c-tiny-usb/new_id'"
++ACTION=="add", ATTRS{idVendor}=="3171", ATTRS{idProduct}=="001?", RUN+="/sbin/modprobe i2c_tiny_usb" RUN+="/bin/bash -c 'echo 0x3171 0x$env{ID_MODEL_ID} >> /sys/bus/usb/drivers/i2c-tiny-usb/new_id'"
+ ACTION=="add", ATTRS{idVendor}=="3171", ATTRS{idProduct}=="001?", SUBSYSTEM=="i2c-dev", SYMLINK+="ClusterCTRL-%n"
