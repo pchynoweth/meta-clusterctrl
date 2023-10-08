@@ -1,0 +1,40 @@
+From 083282da8be2320a36a557b1602250bc2c828baf Mon Sep 17 00:00:00 2001
+From: pchynoweth <24738364+pchynoweth@users.noreply.github.com>
+Date: Sun, 8 Oct 2023 11:58:10 +0100
+Subject: [PATCH] ip_forward sed should now work default sysctl.conf
+
+---
+ files/usr/sbin/reconfig-clusterctrl | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/files/usr/sbin/reconfig-clusterctrl b/files/usr/sbin/reconfig-clusterctrl
+index a532159..e281670 100755
+--- a/files/usr/sbin/reconfig-clusterctrl
++++ b/files/usr/sbin/reconfig-clusterctrl
+@@ -66,7 +66,7 @@ if [ ! -z $1 ];then
+    echo "cnat" > /etc/hostname
+    sed -i 's~^static ip_address=172.19.181.*/24 #Cluster.*~static ip_address=172.19.181.253/24 #ClusterCTRL~' /etc/dhcpcd.conf
+    rm -f /etc/systemd/system/getty.target.wants/getty@ttyGS0.service
+-   sed -i "s/^#net.ipv4.ip_forward=1 # Cluster.*/net.ipv4.ip_forward=1 # ClusterCTRL/" /etc/sysctl.conf
++   sed -i "s/^#net.ipv4.ip_forward=1.*/net.ipv4.ip_forward=1 # ClusterCTRL/" /etc/sysctl.conf
+    systemctl enable clusterctrl-init
+    systemctl disable clusterctrl-composite
+    echo "TYPE=cnat" >> /etc/default/clusterctrl
+@@ -81,7 +81,7 @@ if [ ! -z $1 ];then
+    sed -i 's~^static ip_address=172.19.181.*/24 #Cluster.*~static ip_address=172.19.181.253/24 #ClusterCTRL~' /etc/dhcpcd.conf
+    sed -i 's#^\(denyinterfaces.*\)#\1 eth0#' /etc/dhcpcd.conf
+    rm -f /etc/systemd/system/getty.target.wants/getty@ttyGS0.service
+-   sed -i "s/^net.ipv4.ip_forward=1 # ClusterCTRL/#net.ipv4.ip_forward=1 # ClusterCTRL/" /etc/sysctl.conf
++   sed -i "s/^net.ipv4.ip_forward=1.*/#net.ipv4.ip_forward=1 # ClusterCTRL/" /etc/sysctl.conf
+    systemctl enable clusterctrl-init
+    systemctl disable clusterctrl-composite
+    echo "TYPE=c" >> /etc/default/clusterctrl
+@@ -97,7 +97,7 @@ if [ ! -z $1 ];then
+    ln -fs /lib/systemd/system/getty@.service \
+     /etc/systemd/system/getty.target.wants/getty@ttyGS0.service
+    systemctl disable clusterctrl-init
+-   sed -i "s/^net.ipv4.ip_forward=1 # ClusterCTRL/#net.ipv4.ip_forward=1 # ClusterCTRL/" /etc/sysctl.conf
++   sed -i "s/^net.ipv4.ip_forward=1.*/#net.ipv4.ip_forward=1 # ClusterCTRL/" /etc/sysctl.conf
+    echo "TYPE=node" >> /etc/default/clusterctrl
+    echo "ID=$P" >> /etc/default/clusterctrl
+    systemctl enable clusterctrl-composite
