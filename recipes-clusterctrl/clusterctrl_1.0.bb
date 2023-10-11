@@ -1,8 +1,3 @@
-#
-# This file was derived from the 'Hello World!' example recipe in the
-# Yocto Project Development Manual.
-#
-
 DESCRIPTION = "Control application for ClusterHAT"
 SECTION = "clusterctrl"
 DEPENDS = ""
@@ -96,10 +91,10 @@ interface br0
 fallback clusterctrl_fallback_br0
 EOF
 
-    install -m 644 ${WORKDIR}/60-br0.netdev ${WORKDIR}/65-br0.network ${D}${systemd_unitdir}/network
-    install -m 644 ${WORKDIR}/60-brint.netdev ${WORKDIR}/65-brint.network ${D}${systemd_unitdir}/network
-
     if [ ${CLUSTERCTRL_VARIANT} = "cbridge" ]; then
+
+        install -m 644 ${WORKDIR}/60-brint.netdev ${WORKDIR}/65-brint.network ${D}${systemd_unitdir}/network
+
         for i in 1 2 3 4 5; do
             cat > ${D}${systemd_unitdir}/network/65-ethupi$i.10.network << EOF
 [Match]
@@ -112,6 +107,9 @@ EOF
     fi
 
     if [ ${CLUSTERCTRL_VARIANT} = "cbridge" ] || [ ${CLUSTERCTRL_VARIANT} = "cnat" ]; then
+
+        install -m 644 ${WORKDIR}/60-br0.netdev ${WORKDIR}/65-br0.network ${D}${systemd_unitdir}/network
+
         for i in 1 2 3 4 5; do
             cat > ${D}${systemd_unitdir}/network/65-ethpi$i.network << EOF
 [Match]
