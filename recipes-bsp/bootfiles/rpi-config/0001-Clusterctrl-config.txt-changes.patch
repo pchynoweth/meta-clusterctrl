@@ -1,0 +1,26 @@
+From 92cb0a5b474174dcc42cb016b29880b08bb1fde1 Mon Sep 17 00:00:00 2001
+From: pchynoweth <24738364+pchynoweth@users.noreply.github.com>
+Date: Wed, 11 Oct 2023 21:56:37 +0100
+Subject: [PATCH] Clusterctrl config.txt changes
+
+---
+ config.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/config.txt b/config.txt
+index 16db254..c08bb51 100644
+--- a/config.txt
++++ b/config.txt
+@@ -1185,3 +1185,12 @@
+ ##     Default 35.
+ ##
+ #dtparam=pwr_led_gpio=35
++# Load overlay to allow USB Gadget devices
++#dtoverlay=dwc2,dr_mode=peripheral
++# Use XHCI USB 2 Controller for Cluster HAT Controllers
++[pi4]
++otg_mode=1 # Controller only
++[cm4]
++otg_mode=0 # Unless CM4
++[all]
++
