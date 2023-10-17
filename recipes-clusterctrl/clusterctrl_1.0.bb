@@ -12,6 +12,7 @@ SRC_URI = "git://github.com/burtyb/clusterhat-image.git;protocol=https;branch=ma
            file://60-brint.netdev \
            file://65-br0.network \
            file://65-brint.network \
+           file://95-gadget.link \
            file://0001-Fixed-udev-rule-for-i2c_tiny_usb.patch \
            file://0001-ip_forward-sed-should-now-work-default-sysctl.conf.patch \
            "
@@ -129,6 +130,8 @@ Name=ethupi$i
 Bridge=br0
 EOF
         done
+    else
+        install -m 644 ${WORKDIR}/95-gadget.link ${D}${systemd_unitdir}/network
     fi
 }
 

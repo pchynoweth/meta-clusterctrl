@@ -1,0 +1,8 @@
+[Match]
+OriginalName=usb*
+Driver=g_ether
+
+[Link]
+NamePolicy=keep kernel database onboard slot path
+AlternativeNamesPolicy=database onboard slot path
+MACAddressPolicy=none
