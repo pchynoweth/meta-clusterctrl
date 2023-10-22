@@ -1,0 +1,38 @@
+From bf07bfe4dd55cfa3a295dd60fb5e1d4ffe5031da Mon Sep 17 00:00:00 2001
+From: Kas User <kas@example.com>
+Date: Sun, 22 Oct 2023 18:18:35 +0000
+Subject: [PATCH] Changed pause image to an armv6 compatible image
+
+---
+ pkg/cli/cmds/const_linux.go     | 2 +-
+ scripts/airgap/volume-test.yaml | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pkg/cli/cmds/const_linux.go b/pkg/cli/cmds/const_linux.go
+index 2543296660..15d8580c5c 100644
+--- a/pkg/cli/cmds/const_linux.go
++++ b/pkg/cli/cmds/const_linux.go
+@@ -3,6 +3,6 @@
+ package cmds
+ 
+ const (
+-	DefaultPauseImage  = "rancher/mirrored-pause:3.6"
++	DefaultPauseImage  = "docker.io/titilambert/armv6-pause:latest"
+ 	DefaultSnapshotter = "overlayfs"
+ )
+diff --git a/scripts/airgap/volume-test.yaml b/scripts/airgap/volume-test.yaml
+index c851b285c6..7130724b87 100644
+--- a/scripts/airgap/volume-test.yaml
++++ b/scripts/airgap/volume-test.yaml
+@@ -19,7 +19,7 @@ metadata:
+ spec:
+   containers:
+   - name: volume-test
+-    image: rancher/mirrored-pause:3.6
++    image: docker.io/titilambert/armv6-pause:latest
+     imagePullPolicy: IfNotPresent
+     volumeMounts:
+     - name: volv
+-- 
+2.39.2
+
